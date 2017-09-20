@@ -727,12 +727,13 @@ static inline int MPIDI_NM_mpi_win_free(MPIR_Win ** win_ptr)
     MPIR_Errflag_t errflag = MPIR_ERR_NONE;
     MPIR_Win *win = *win_ptr;
     uint32_t window_instance;
+
     MPIR_FUNC_VERBOSE_STATE_DECL(MPID_STATE_MPIDI_NM_MPI_WIN_FREE);
     MPIR_FUNC_VERBOSE_ENTER(MPID_STATE_MPIDI_NM_MPI_WIN_FREE);
 
     if (!MPIDI_OFI_ENABLE_RMA) {
         mpi_errno = MPIDI_CH4R_mpi_win_free(win_ptr);
-        goto fn_fail;
+        goto fn_exit;
     }
 
     MPIDI_CH4U_ACCESS_EPOCH_CHECK_NONE(win, mpi_errno, return mpi_errno);
